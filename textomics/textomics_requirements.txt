@@ -1,0 +1,11 @@
+# textomics_requirements
+pylab
+python-dotenv
+pymssql
+numpy
+pandas
+requests
+lxml
+textract
+thinc==6.10.3
+spacy==spacy
