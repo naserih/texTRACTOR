@@ -1,0 +1,570 @@
+<!-- index.html -->
+<html>
+<body style="background-color:#E8CEBF;">
+
+<link href="./static/fontawesome-free-5.15.2-web/css/all.css" rel="stylesheet">
+<script type="text/javascript" src="./static/fontawesome-free-5.15.2-web/js/all.js"></script>
+<script type="text/javascript" src="./static/js/hammer.min.js"></script>
+<script type="text/javascript" src="static/js/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<style>
+  body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+div.ex1 {
+  /*background-color: lightblue;*/
+  width: 150px;
+  height: 500px;
+  overflow: scroll;
+}
+
+
+    .btn
+    {
+        margin:5px;
+        /*width:30px;*/
+        /*height:30px;*/
+        background-color: #00386c;
+
+  border: none;
+  color: #f1d1bd;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 24px;
+    }
+
+.green
+    {
+    background-color: green;
+    }
+.red{
+    background-color:#8b0000;
+    }
+
+.listSel
+    {
+margin:3px;
+background-color: #00386c;
+  border: none;
+  color: #f1d1bd;
+  padding: 1px 8px;
+  cursor: default;
+  font-size: 14px;
+    }
+.listNoSel
+    {
+margin:3px;
+background-color: #E8CEBF;
+  border: 1;
+  color: black;
+  padding: 1px 8px;
+  cursor: pointer;
+  font-size: 14px;
+    }
+
+        /* Darker background on mouse-over */
+.btn:hover {
+  background-color: #808080;
+  /*background-color: #00386c;*/
+}
+.ended {
+  background-color: #808080;
+    cursor: not-allowed;
+  /*background-color: #00386c;*/
+}
+.trans
+    {
+
+        background-color: #E8CEBF;
+
+    }
+
+.trans:hover {
+  background-color: #E8CEBF;
+  color: #ff9800;
+  /*background-color: #00386c;*/
+}
+.label-success {background-color: #4CAF50;} /* Green */
+.label-info {background-color: #2196F3;} /* Blue */
+.label-warning {background-color: #ff9800;} /* Orange */
+.label-danger {background-color: #f44336;} /* Red */ 
+.label-other {background-color: #e7e7e7; color: black;} /* Gray */ 
+
+.tooltip {
+
+  position: relative;
+  display: inline-block;
+  /*border-bottom: 1px dotted black;*/
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  font-size: 12px;
+  width: 100px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 70%;
+  left: 0%;
+  margin-left: 0px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.labelClass {
+  display: none;
+}
+
+/*
+ * Some basic positioning styles, and we give it the pointer cursor to show 
+ * that it's clickable
+ */
+
+label {
+  display: inline-block;
+  padding: 3px 20px;
+  cursor: pointer;
+}
+
+
+
+/*
+ * With how I decided to build this, the position: relative is super important.
+ * We're going to position a pseudo element within this element(As it is the containing box)
+ */
+
+label span {
+  position: relative;
+  line-height: 27px;
+}
+
+
+/* 
+ * Because we're using pseudo elements, a content property is required to make them appear.
+ */
+
+label span:before,
+label span:after {
+  content: '';
+}
+
+
+/*
+ * We are using the :before peudo elemnt as the actual button,
+ * then we'll position the :after over it. You could also use a background-image,
+ * font-icon, or really anything if you want different styles.
+ * For the specific style we're going for, this approach is simply the easiest, but
+ * once you understand the concept you can really do it however you like.
+ */
+
+label span:before {
+  border: 2px solid #00386c;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+label span:after {
+  background: #00386c;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 0px;
+  left: 4px;
+  transition: 300ms;
+  opacity: 0;
+}
+
+
+
+/*
+ * This is the most important part of this whole file, if you understand what's happening here
+ * you can really make this in so many different ways.
+ * 
+ * We start by selecting the input inside of the label, with "label input". From there we use the 
+ * ":checked" selector to *only* select the input when it is checked. We then use the immediate sibling 
+ * selector(+) to select the span, and then it's pseudo element :after(What we are using to mark the button)
+ * Because we already styled the :after, all we have to do is set the opacity to 1, making it fade in.
+ */
+label input:checked+span:after{
+  opacity: 1;
+}
+
+
+/* 
+ * A little styling for the demo 
+ */
+.container{
+  position: relative;
+  text-align: center;
+  color: black;
+}
+.top_left{
+  position: absolute;
+  top: 2px
+  left: 10px;
+}
+</style>
+
+      <!-- HEADER  -->
+<div id="login" class="tooltip">
+<i class="fas fa-key"></i>
+<input type="text" id="key" name="key" placeholder="ACCESS KEY">
+  <button id = 'key_check'> OK </button>
+</div>
+<div class="tooltip">
+  <span  class="tooltiptext"> Help</span>
+  <button id = "help" class="btn trans">   
+    <a href="{{ url_for('help') }}" target="_blank">
+        <i class="fas fa-info-circle"></i> 
+        </a>
+</button>
+</div>
+<span id="status" class="label-other"></span>
+
+<div id="display">
+<table style="width:1000px">
+    <tr>
+      <td colspan="1" style="height:50px">
+
+<div class="tooltip">
+<span id= "prev_tip" class="tooltiptext"> - </span>
+ <button id = 'prev_file' class="btn ended" disabled="true">   <i class="fas fa-chevron-left"></i> 
+</button>
+</div>
+
+<div id = 'next_div' class="tooltip">
+    <span id= "next_tip" class="tooltiptext"> Note 2 </span>
+ <button id = 'next_file' class="btn">   <i id= "next_file_i" class="fas fa-chevron-right"></i> 
+</button>
+</div>
+
+  <div class="tooltip">
+     <span class="tooltiptext">Submit Scores</span>
+    <button id="submit" class="btn"> <i id= "submit_i" class="far fa-save"></i>
+  </button>
+  </div>
+
+</td>
+<td>
+
+
+<div  class="tooltip">
+<span  class="tooltiptext"> Read the help page for scoring guide. </span>
+<label for="pain_score"><b>Pain Score:</b></label>
+</div>
+
+<div  class="tooltip">
+<span  class="tooltiptext"> No mention of the pain / pain score is not clear </span>
+<label>
+  <input class= "labelClass redlabel" id="n/a" type="radio" name="radio" value="na">
+  <span style="color:#8b0000"> <b>N/A</b></span>
+</label>
+</div>
+
+<div  class="tooltip">
+<span  class="tooltiptext"> Pain Score of 0 [denied pain] </span>
+<label>
+  <input class= "labelClass" id="none" type="radio" name="radio" value="none">
+  <span>None</span>
+</label>
+</div>
+
+<div class="tooltip">
+<span  class="tooltiptext"> Pain Score of [1-3] </span>
+<label>
+  <input class= "labelClass" id="mild" type="radio" name="radio" value="mild">
+  <span>Mild</span>
+</label>
+</div>
+
+<div  class="tooltip">
+<span class="tooltiptext"> Pain Score of [4-6] </span>
+<label>
+  <input class= "labelClass" id="moderate" type="radio" name="radio" value="moderate">
+  <span>Moderate</span>
+</label>
+</div>
+
+<div  class="tooltip">
+<span  class="tooltiptext"> Pain Score [7-10] </span>
+<label>
+  <input class= "labelClass" id="severe" type="radio" name="radio" value="severe">
+  <span>Severe</span>
+</label>
+</div>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+      <!-- LIST MEANU  -->
+<td rowspan = "4" style="width:200px" valign="top">  
+<div style="width:200px; font-family:'Courier New', Courier, monospace; font-size:100%; border: 1px solid black;">Scoreboard</div>
+<div class = "ex1" id="scoreBoard" style="width:200px; font-family:'Courier New', Courier, monospace; font-size:100%; border: 1px solid black;">
+</div>
+  
+</td>
+<td>
+<!-- <iframe id="pdfFrame" style="width:600px; height:500px;" frameborder="0"></iframe> -->
+<div class="container">
+<embed id="pdfFrame" width="800" height="500" type="application/pdf">
+  <div class='top_left' id='note_name'> </div>
+</div>
+</td>
+<td>
+  <div>
+  comment:
+  </div>
+   <textarea id="comment" type="text" rows="10", cols='20' readonly>
+    COMMENTING WILL BE AVAILABLE SOON!</textarea>
+</td>
+</tr>
+</table>
+</div>
+
+
+<script type='text/javascript'>
+
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  var display_div = document.getElementById("display");
+display_div.style.display = "none"
+
+var patient_index, patients_data, stored_scores, patient_file, start_of_file=true, end_of_file;
+var score = null;
+var score_dic = {};
+
+function load_note(patient_index){ 
+            // console.log(patient_index)
+            // console.log(patients_data[patient_index])
+        $.getJSON($SCRIPT_ROOT + '/_load_patient_file', {
+          fileId: patients_data[patient_index],
+          key: $('#key').val(),
+        }, function(data) {
+            patient_file = data.patient_file
+            // console.log(patient_file)
+            document.getElementById('pdfFrame').src = patient_file+"#toolbar=0&navpanes=0"
+          });
+        $('#note_name').html(patients_data[patient_index])
+
+      };
+
+function check_index(index){
+    document.getElementById("none").checked = false;
+    document.getElementById("mild").checked = false;
+    document.getElementById("moderate").checked = false;
+    document.getElementById("severe").checked = false;
+    document.getElementById("n/a").checked = false;
+    $('#prev_tip').html('Note '+(index))
+    $('#next_tip').html('Note '+(index+2))
+
+    for (var i = 0; i < patients_data.length; i++) {
+    $('#'+i).removeClass("listSel");
+    $('#'+i).addClass("listNoSel");
+  }
+    $('#'+index).removeClass("listNoSel");
+    $('#'+index).addClass("listSel");
+
+    if (index == 0){
+                start_of_file = true
+              document.getElementById('prev_file').disabled = true;
+              $('#prev_file').addClass("ended");
+              $('#prev_tip').html(`-`)
+              }
+    else if (index+1 == patients_data.length){
+            end_of_file = true
+            document.getElementById('next_file').disabled = true;
+            $('#next_file').addClass("ended");
+            $('#next_tip').html(`-`)
+        }
+    else {
+        if (end_of_file == true){
+            document.getElementById('next_file').disabled = false;
+            end_of_file = false
+          // document.getElementById('next_file').disabled = true;
+          $('#next_file').removeClass("ended");
+          $('#next_file').addClass("btn");
+          $('#next_tip').html('Note '+(index+1))
+          }
+        if (start_of_file == true){
+            document.getElementById('prev_file').disabled = false;
+            start_of_file = false
+            // document.getElementById('prev_file').disabled = true;
+            $('#prev_file').removeClass("ended");
+            $('#prev_file').addClass("btn");
+            $('#prev_tip').html('Note ' +1)
+          }
+    }
+
+}
+
+    document.getElementById('next_file').addEventListener('click', function (e) {
+
+        if (patient_index+1 < patients_data.length){
+             score = null
+            patient_index += 1
+            load_note(patient_index)
+        }
+        
+        check_index(patient_index)
+
+          // document.getElementById("reload").className = "btn fas fa-sync orange";
+      });
+
+    document.getElementById('prev_file').addEventListener('click', function (e) {
+          if (patient_index > 0){
+                score = null
+                patient_index -= 1
+                load_note(patient_index)
+          }
+          check_index(patient_index)
+      });
+
+    document.getElementById('key_check').addEventListener('click', function (e) {
+      // $('#key').val("XXXX")
+      $.getJSON($SCRIPT_ROOT + '/_load_patients', {
+                  key: $('#key').val(),
+              }, function(data) {
+                  patient_index = 0
+                  patients_data = data.patients_data
+                  stored_scores = data.stored_scores
+                  if (patients_data === undefined || patients_data.length == 0) 
+                      {
+                        $('#status').removeClass("label-other");
+                        $('#status').addClass("label-danger");
+                        $('#status').html(`Info: Access Denied!`)
+                       }
+                  else if (patients_data.length == 1 && patients_data[0] == 'DONE') 
+                      {
+                        $('#status').removeClass("label-other");
+                        $('#status').addClass("label-success");
+                        $('#status').html(`Thank You: No more files to process!`)
+                       }
+                  else{
+                        $('#status').removeClass("label-other");
+                        $('#status').removeClass("label-danger");
+                        $('#status').addClass("label-success");
+                        $('#status').html(patients_data.length +` file loaded!`)
+                        document.getElementById("login").style.display = "none";
+                        load_note(0)
+                        display_div.style.display = "block"
+                      }   
+            for (var i = 0; i < patients_data.length; i++) {
+                // console.log(patients_data[i])
+                // console.log(stored_scores[i])
+                if (patients_data[i] in stored_scores){
+                    var prev_score =  stored_scores[patients_data[i]]
+                }
+                else {
+                 var prev_score = '-'   
+                }
+                score_dic[i] = {
+                    'file_name': patients_data[i],
+                    'id': i,
+                    'score' : prev_score}
+
+                var scoreBoard = document.getElementById("scoreBoard")
+                var patientNote = document.createElement("DIV");
+                var idButton = document.createElement('button');
+                var spaceSpan = document.createElement("SPAN");
+                var scoreSpan = document.createElement("SPAN");
+                var buttonText = document.createTextNode('note '+(i+1));
+                var spaceText = document.createTextNode('  :  ');
+                var scoreText = document.createTextNode(prev_score);
+                idButton.onclick = function() {
+                    patient_index = Number(this.id); 
+                    load_note(patient_index);
+                    check_index(patient_index)
+                };
+                idButton.setAttribute("id", i);
+                idButton.setAttribute("class", "listNoSel");
+                scoreSpan.setAttribute("id", "note_"+i);
+                idButton.appendChild(buttonText);
+                spaceSpan.appendChild(spaceText);
+                scoreSpan.appendChild(scoreText);
+                patientNote.appendChild(idButton);
+                patientNote.appendChild(spaceSpan);
+                patientNote.appendChild(scoreSpan);
+                scoreBoard.appendChild(patientNote);
+                };
+            });
+        });
+
+      $('input:radio[name="radio"]').change(function(){
+        $('#status').removeClass("label-other");
+        $('#status').removeClass("label-success");
+        $('#status').addClass("label-danger");
+        $('#status').html(` Unsaved scores.`)
+
+          $("#submit").removeClass('green');
+          $("#submit").addClass('red');
+          // $("#submit_i").removeClass('far fa-check-square');
+          // $("#submit_i").addClass('far fa-save');
+
+        score = this.value
+        // console.log(score)
+        // console.log(score_dic)
+        
+        // console.log(typeof patient_index)
+        $("#note_"+patient_index).html(score);
+        score_dic[patient_index]['score'] = score;
+
+      })
+
+document.getElementById('submit').addEventListener('click', function (e) {
+
+  // $("#submit").toggleClass('fa-edit fa-check-square');
+  $("#submit").removeClass('red');
+  $("#submit").addClass('green');
+  // $("#submit_i").removeClass('far fa-save');
+  // $("#submit_i").addClass('far fa-check-square');
+
+  $('#status').removeClass("label-other");
+  $('#status').removeClass("label-danger");
+  $('#status').addClass("label-success");
+  $('#status').html(`Successfuly Saved.`)
+
+
+$.ajax({
+  type: "POST",
+  contentType: "application/json; charset=utf-8",
+  url: "/_post_scores",
+  data: JSON.stringify({key:$('#key').val(), scores:score_dic}),
+  success: function (data) {
+    console.log(data.status);
+  },
+  dataType: "json"
+});
+
+
+});
+
+</script>
+</body>
+</html>
