@@ -1,6 +1,7 @@
 import os
 import time
 import textract
+import env
 
 def extract_patient_note(patient_file):
 
@@ -83,10 +84,10 @@ def process_metamap(input_file, data, temp_file, meta_file):
 #                 print os.path.basename(input_file), batch_n, len(batch_data)
 
 def main():
-    project_root = r'C:\Users\FEPC-L389\Google Drive\1_PhDProject\Galenus\textomics\data'
+    project_root = env.ROOT
     documents_root = project_root+r'\TEST_notes\txt Examples'
     metamap_cache_path = "%s/metamap_cache"%(project_root)
-    metamap_path = r'E:/archived_projects_hossein/NLP_local/public_mm_win32_main_2014/public_mm/bin/metamap'
+    metamap_path = env.METAMAT_APP
     patients_folders = [os.path.join(documents_root, patient) for patient in 
                             os.listdir(documents_root)]
 

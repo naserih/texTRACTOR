@@ -1,20 +1,10 @@
 # performance_check.py
 import csv
+import env
 
-DATA_ROOT = r"C:\Users\FEPC-L389\Google Drive\1_PhDProject\Galenus\data\metamap_pain/"
+DATA_ROOT = env.DATA_ROOT
 
 french_notes = [
-'20191121T090900',
-'20180807T113300',
-'20180315T131500',
-'20181219T090200',
-'20180329T120900',
-'20190116T114800',
-'20180118T170000',
-'20180808T110400',
-'20190517T150200',
-'20180531T143700',
-'20180523T120200',
 ]
 nlp_score_file = 'ARIA_pain_score_NLP.csv'
 inner_annotater_file = 'ARIA_inner_annotater.csv'

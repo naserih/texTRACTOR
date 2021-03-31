@@ -6,10 +6,11 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import os
 import csv
+import env
 
 variable = ['f_words',  'f_lengh', 'f_lines'][1]
 
-statFolder = r'C:\Users\FEPC-L389\Dropbox (Personal)\1_PhDProject\NLP\stats'
+statFolder = env.STAT_FOLDER
 files = [os.path.join(statFolder,f) for f in os.listdir(statFolder) if '.csv' in f]
 print (files)
 # sns.set(color_codes=True)
@@ -33,23 +34,6 @@ for file in files:
 plt.legend(labels=labeles)
 plt.title(variable)    
 
-# sns.distplot(x);
-# sns.distplot(x, hist=False, rug=True);
 
-# from scipy.integrate import trapz
-# density = np.sum(kernels, axis=0)
-# density /= trapz(density, support)
-# plt.plot(support, density);
-# ;
-
-# sns.kdeplot(x)
-# sns.kdeplot(x, bw=.2, label="bw: 0.2")
-# sns.kdeplot(x, bw=2, label="bw: 2")
-# plt.legend()
-# plt.show()
-
-# x = np.random.gamma(6, size=200)
-# sns.distplot(x, kde=False, fit=stats.gamma, label="bw: .2")
-# sns.distplot(x, kde=False, fit=stats.gamma, label="bw: 2")
 plt.show()
 
