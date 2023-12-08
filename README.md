@@ -40,14 +40,14 @@ To get started with Textractor, follow these simple steps:
     python main.py
     ```
 
-    This command will start the Textractor web application.
+    This command will start the TexTRACTOR web application.
 
 2. For converting notes from text to PDF, use the following command:
 
     ```bash
-    python doc2pdf.py
+    python DOC2PDF.py
     ```
 
     This script facilitates the conversion of text notes to PDF format.
 
-That's it! You are now ready to leverage Textractor for pain annotation in clinical notes. Explore the web application, annotate pain scores, and contribute to the advancement of healthcare research.
+That's it! You are now ready to leverage TexTRACTOR for pain annotation in clinical notes. Explore the web application, annotate pain scores, and contribute to the advancement of healthcare research.
